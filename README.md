@@ -50,6 +50,7 @@ The crawler will:
   "url": "https://www.interez.sk/example-article/",
   "title": "Example Article Title",
   "author": "Author Name",
+  "topic": "Topic of the Article",
   "publication_date": "2025-01-15T10:00:00+00:00",
   "hashed_content": "d41d8cd98f00b204e9800998ecf8427e",
   "scraped_at": "2025-01-20 14:30:00"

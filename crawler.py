@@ -142,7 +142,7 @@ def extract_urls_from_page(content):
     soup = BeautifulSoup(content, 'html.parser')
     for link in soup.find_all('a', href=True):
         url = link['href']
-        if is_valid_url(url) and is_allowed_by_robots(url) and url not in VISITED_URLS and url not in PENDING_URLS:
+        if is_valid_url(url) and is_allowed_by_robots(url) and url not in VISITED_URLS and url not in PENDING_URLS and url not in urls:
             urls.append(url)
     print(f'Extracted {len(urls)} URLs from the page')
     PENDING_URLS.extend(urls)
