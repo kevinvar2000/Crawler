@@ -84,6 +84,7 @@ def load_state():
 def store_data(url, content):
     title = extract_title(content)
     author = extract_author(content)
+    topic = extract_topic(content)
     publication_date = extract_publication_date(content)
 
     content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
@@ -92,6 +93,7 @@ def store_data(url, content):
         'url': url,
         'title': title,
         'author': author,
+        'topic': topic,
         'publication_date': publication_date,
         'hashed_content': content_hash,
         'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
@@ -114,6 +116,14 @@ def extract_author(content):
     if author_tag and 'content' in author_tag.attrs:
         return author_tag['content'].strip()
     return "No Author Found"
+
+
+def extract_topic(content):
+    soup = BeautifulSoup(content, 'html.parser')
+    topic_tag = soup.find('a', class_='topic')
+    if topic_tag:
+        return topic_tag.get_text(strip=True)
+    return "No Topic Found"
 
 
 def extract_publication_date(content):
