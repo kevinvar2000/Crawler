@@ -86,6 +86,7 @@ def store_data(url, content):
     author = extract_author(content)
     topic = extract_topic(content)
     publication_date = extract_publication_date(content)
+    article_text = extract_article_text(content)
 
     content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
 
@@ -96,6 +97,7 @@ def store_data(url, content):
         'topic': topic,
         'publication_date': publication_date,
         'hashed_content': content_hash,
+        'article_text': article_text,
         'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
     }
     with open('crawled_pages.json', 'a', encoding='utf-8') as f:
@@ -124,6 +126,14 @@ def extract_topic(content):
     if topic_tag:
         return topic_tag.get_text(strip=True)
     return "No Topic Found"
+
+
+def extract_article_text(content):
+    soup = BeautifulSoup(content, 'html.parser')
+    article_tag = soup.find('article', id='clanok')
+    if article_tag:
+        return article_tag.get_text(strip=True)
+    return "No Article Text Found"
 
 
 def extract_publication_date(content):
